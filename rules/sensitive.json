@@ -1,0 +1,51 @@
+{
+  "line": "sensitive",
+  "line_name": "敏感",
+  "note": "敏感内容检查线。高危项不回显原文,只报类型与位置;代码块同样扫描。用户自定义项(人名映射/内部路径/内网域名/敏感词)通过 --config 注入,仓库只带合成示例。",
+  "rules": [
+    {
+      "id": "S1",
+      "name": "疑似密钥/凭证",
+      "detector": "regex_hits",
+      "severity": "高",
+      "enabled": true,
+      "params": {
+        "include_code": true,
+        "raw_text": true,
+        "no_echo": true,
+        "patterns": [
+          { "re": "AKIA[0-9A-Z]{16}", "label": "疑似 AWS AccessKey" },
+          { "re": "(?<![A-Za-z0-9])A[Kk](?!IA)[A-Za-z0-9]{12,}", "label": "疑似 AK 前缀凭证" },
+          { "re": "(?<![A-Za-z0-9])S[Kk](?!-)[A-Za-z0-9]{12,}", "label": "疑似 SK 前缀凭证" },
+          { "re": "\\bsk-[A-Za-z0-9_-]{16,}", "label": "疑似 sk- 前缀密钥" },
+          { "re": "(?i)bearer\\s+[A-Za-z0-9._-]{16,}", "label": "疑似 Bearer Token" },
+          { "re": "-----BEGIN[A-Z ]*PRIVATE KEY-----", "label": "疑似私钥文件头" },
+          { "re": "\\bgh[posu]_[A-Za-z0-9]{16,}", "label": "疑似 GitHub Token" },
+          { "re": "github_pat_[A-Za-z0-9_]{20,}", "label": "疑似 GitHub 细粒度 Token" },
+          { "re": "\\bxox[baprs]-[A-Za-z0-9-]{10,}", "label": "疑似 Slack Token" },
+          { "re": "AIza[0-9A-Za-z_-]{30,}", "label": "疑似 Google API Key" }
+        ]
+      },
+      "description": "文档中出现疑似密钥、令牌、私钥等凭证(代码块同样扫描;不回显原文)",
+      "advice": "高危:从文档删除该内容,并立即吊销、轮换凭证;须人工确认后处理,不要自动修复"
+    },
+    {
+      "id": "S2",
+      "name": "个人信息",
+      "detector": "regex_hits",
+      "severity": "中",
+      "enabled": true,
+      "params": {
+        "include_code": true,
+        "raw_text": true,
+        "mask": true,
+        "patterns": [
+          { "re": "(?<!\\d)1[3-9]\\d{9}(?!\\d)", "label": "疑似手机号" },
+          { "re": "(?<!\\d)\\d{17}[0-9Xx](?!\\d)", "label": "疑似身份证号" }
+        ]
+      },
+      "description": "大陆手机号、身份证号等个人信息(默认仅标「中」,可在配置中关闭)",
+      "advice": "脱敏(保留前 3 后 2 位)或删除"
+    }
+  ]
+}

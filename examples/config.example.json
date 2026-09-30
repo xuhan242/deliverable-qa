@@ -1,0 +1,14 @@
+{
+  "note": "本地私有配置示例(全部为合成数据)。真实配置请复制到仓库外(如 C:\\Users\\you\\qa_local.json)修改后通过 --config 传入。",
+  "rules_override": {
+    "T4": { "severity": "低" },
+    "A1": { "params": { "per_1000": 2.0 } }
+  },
+  "sensitive_extra": {
+    "name_map": { "王经理": "leader", "李四": "member-b" },
+    "path_prefixes": ["D:\\company\\reports"],
+    "domains": ["intranet.company.local"],
+    "words": ["凤凰计划"],
+    "severity": { "names": "中", "paths": "中", "domains": "中", "words": "高" }
+  }
+}

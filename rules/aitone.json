@@ -1,0 +1,88 @@
+{
+  "line": "aitone",
+  "line_name": "AI腔",
+  "note": "AI 腔检查线,阈值均可在 params 中调整,也可用 --config 的 rules_override 覆盖。",
+  "rules": [
+    {
+      "id": "A1",
+      "name": "破折号密度超标",
+      "detector": "dash_density",
+      "severity": "中",
+      "enabled": true,
+      "params": { "per_1000": 2.0 },
+      "description": "全文破折号(——)密度超过每千字 2 处(阈值可调;不含代码块)",
+      "advice": "删减破折号,改为逗号、冒号或直接拆句"
+    },
+    {
+      "id": "A2",
+      "name": "AI 套话与句式",
+      "detector": "regex_hits",
+      "severity": "中",
+      "enabled": true,
+      "params": {
+        "include_code": false,
+        "raw_text": false,
+        "patterns": [
+          { "re": "值得注意的是", "label": "套话「值得注意的是」" },
+          { "re": "总而言之", "label": "套话「总而言之」" },
+          { "re": "综上所述", "label": "套话「综上所述」" },
+          { "re": "让我们", "label": "套话「让我们」" },
+          { "re": "不仅[^\u3002\uFF1B;]{0,30}[更也]", "label": "句式「不仅…更/也…」" }
+        ]
+      },
+      "description": "常见 AI 套话与模板句式(词条可增删,加一条 = 加一行数据)",
+      "advice": "删除套话,或改写为具体信息"
+    },
+    {
+      "id": "A3",
+      "name": "首先/其次/最后三段式",
+      "detector": "tri_template",
+      "severity": "中",
+      "enabled": true,
+      "params": { "markers": ["首先", "其次", "再次", "最后"], "min_markers": 2 },
+      "description": "多个段落以首先/其次/最后等开头,构成模板化三段式",
+      "advice": "改为自然衔接、小标题或真正的列表"
+    },
+    {
+      "id": "A4",
+      "name": "加粗标签列表化",
+      "detector": "bold_labels",
+      "severity": "中",
+      "enabled": true,
+      "params": { "min_consecutive": 3 },
+      "description": "连续多段以「**加粗标签**:」开头,把段落写成了列表",
+      "advice": "改为 markdown 列表、表格,或合并为自然段落"
+    },
+    {
+      "id": "A5",
+      "name": "三并列短句排比",
+      "detector": "parallel_clauses",
+      "severity": "低",
+      "enabled": true,
+      "params": { "min_clauses": 3, "max_clause_len": 8 },
+      "description": "单句内出现三个及以上超短并列分句(排比腔)",
+      "advice": "合并为紧凑表达,或改写为列表"
+    },
+    {
+      "id": "A6",
+      "name": "空洞收尾",
+      "detector": "hollow_closing",
+      "severity": "低",
+      "enabled": true,
+      "params": {
+        "scan_tail": 3,
+        "patterns": [
+          { "re": "未来可期", "label": "空洞收尾「未来可期」" },
+          { "re": "让我们共同期待", "label": "空洞收尾「让我们共同期待」" },
+          { "re": "(值得|敬请)期待", "label": "空洞收尾「(值得/敬请)期待」" },
+          { "re": "拭目以待", "label": "空洞收尾「拭目以待」" },
+          { "re": "相信在.{0,20}下", "label": "空洞收尾「相信在…下」" },
+          { "re": "必将.{0,12}(更加美好|新台阶|新高度|新篇章)", "label": "空洞收尾「必将…」" },
+          { "re": "谱写.{0,8}新篇章", "label": "空洞收尾「谱写新篇章」" }
+        ]
+      },
+      "description": "结尾段是无信息量的展望/总结",
+      "advice": "改为具体的后续计划或直接删除"
+    }
+  ]
+}

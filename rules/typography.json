@@ -1,0 +1,73 @@
+{
+  "line": "typography",
+  "line_name": "排版",
+  "note": "排版规范检查线。detector 对应 qa_check.py 中注册的检测器;新增同类规则只需在 rules 数组加一行。",
+  "rules": [
+    {
+      "id": "T1",
+      "name": "中文语境半角标点",
+      "detector": "halfwidth_punct",
+      "severity": "中",
+      "enabled": true,
+      "params": { "chars": ",;:!?\"'", "cjk_window": 6 },
+      "description": "中文语境中出现半角标点(应为全角);代码块、行内代码、URL、表格分隔符、数字间千分位/时间分隔符自动豁免",
+      "advice": "将半角标点改为对应全角:,→,、;→;、:→:、?→?、!→!"
+    },
+    {
+      "id": "T2",
+      "name": "docx 字体不统一",
+      "detector": "font_consistency",
+      "severity": "中",
+      "enabled": true,
+      "params": { "min_runs": 3 },
+      "description": "docx 中 run 级中文字体(eastAsia)或西文字体(ascii)与全文主流不一致(仅 docx 适用)",
+      "advice": "将不一致的 run 统一为全文主流字体"
+    },
+    {
+      "id": "T3",
+      "name": "标题层级跳跃",
+      "detector": "heading_jump",
+      "severity": "中",
+      "enabled": true,
+      "params": {},
+      "description": "标题层级一次跨越多级(如一级后直接三级)",
+      "advice": "补齐中间层级标题,或调整层级使其顺承"
+    },
+    {
+      "id": "T4",
+      "name": "日期格式不统一",
+      "detector": "date_mix",
+      "severity": "低",
+      "enabled": true,
+      "params": { "priority": ["iso", "dot", "slash", "cjk"] },
+      "description": "同一文档混用多种日期格式(2026-09-30 / 2026.9.30 / 2026/09/30 / 9月30日)",
+      "advice": "全文统一为一种日期写法(推荐 ISO 式 2026-09-30)"
+    },
+    {
+      "id": "T5",
+      "name": "数字风格不一致",
+      "detector": "number_style",
+      "severity": "低",
+      "enabled": true,
+      "params": {
+        "thousands": true,
+        "plain_min_digits": 5,
+        "plain_max_digits": 8,
+        "measures": ["个", "名", "项", "条", "次", "天", "人", "种", "份", "台", "场"],
+        "units": ["%", "GB", "MB", "KB", "TB", "km", "kg", "ms", "bp", "元", "亿", "万", "点", "倍", "万元", "亿元"]
+      },
+      "description": "同一文档内:千分位用法不一致;同一量词前中文数字与阿拉伯数字混用;数字与单位间空格风格不一致",
+      "advice": "同类数字采用同一种风格(千分位加或不加、数字用一种写法、单位前空格统一)"
+    },
+    {
+      "id": "T6",
+      "name": "中英文空格风格不统一",
+      "detector": "cjk_latin_space",
+      "severity": "低",
+      "enabled": true,
+      "params": { "majority_min": 2 },
+      "description": "汉字与英文字母之间是否加空格,全文风格须一致(加或不加均可;v1 不考察汉字与数字之间)",
+      "advice": "统一为全文主流风格(加空格或不加空格)"
+    }
+  ]
+}
