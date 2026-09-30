@@ -1,0 +1,42 @@
+{
+  "name": "dsh-deliverable-qa",
+  "version": "0.1.0",
+  "description": "交付物质检 DSH 插件:qa_check 工具 + present 交付前强制安检(排版 / AI 腔 / 敏感内容)",
+  "type": "module",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0"
+  },
+  "files": [
+    "lib",
+    "checker",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "sync": "node scripts/sync-checker.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "qa",
+    "lint",
+    "deliverable"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuhan242/deliverable-qa.git",
+    "directory": "plugin"
+  }
+}

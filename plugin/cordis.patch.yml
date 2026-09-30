@@ -1,0 +1,6 @@
+# dsh-deliverable-qa bundle patch
+# 单行宿主插件:注册 qa_check 工具,并在 present 交付前挂质检门。
+# 行名由 profile 自己的 node_modules 解析(dsh plugin add 安装到该 profile)。
+- insert:
+    - id: deliverable-qa
+      name: dsh-deliverable-qa
