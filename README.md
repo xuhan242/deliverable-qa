@@ -16,7 +16,7 @@ AI 生成的文档越来越多,没人审文档。这是输出侧的质检层:**�
 | 形态 | 适合 | 安装方式 |
 |---|---|---|
 | **CLI / Skill** | 任意 agent(ZCode、Claude Code、DSH…)或命令行 | 把 `SKILL.md`、`qa_check.py`、`rules/` 放到 `~/.agents/skills/deliverable-qa/` |
-| **DSH 插件** | DeepSeek Harness 用户:原生 `qa_check` 工具 + **交付前自动安检** | `dsh plugin --profile <profile> add dsh-deliverable-qa`(见 [plugin/](plugin/)) |
+| **DSH 插件** | DeepSeek Harness 用户:原生 `qa_check` 工具 + **交付前自动安检** | `dsh plugin --profile <profile> add https://github.com/xuhan242/deliverable-qa/releases/download/v0.1.0/dsh-deliverable-qa-0.1.0.tgz`(见 [plugin/](plugin/)) |
 
 插件形态多出来的能力:注册原生工具给模型直接调用;在 `present` 声明交付物之前自动质检,
 发现密钥/凭证类高危问题时**拦截交付**(可配置为只告警)。详见 [plugin/README.md](plugin/README.md)。

@@ -8,11 +8,19 @@ DeepSeek Harness 插件:**交付物质检**。文档交付前自动过一遍排�
 
 ## 安装
 
+tarball(当前可用,npm 发布前的正式渠道):
+
+```bash
+dsh plugin --profile <你的 profile> add https://github.com/xuhan242/deliverable-qa/releases/download/v0.1.0/dsh-deliverable-qa-0.1.0.tgz
+```
+
+npm(发布后):
+
 ```bash
 dsh plugin --profile <你的 profile> add dsh-deliverable-qa
 ```
 
-或从本仓库本地路径安装:
+本地路径(开发):
 
 ```bash
 dsh plugin --profile <你的 profile> add ./plugin
